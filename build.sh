@@ -1,8 +1,6 @@
 #!/bin/sh
 
-flatbuffers_repo="https://github.com/google/flatbuffers.git"
 flatbuffers_dir="flatbuffers"
-schema_url="https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/lite/schema/schema.fbs"
 schema="schema.fbs"
 virtualenv="venv"
 
@@ -26,14 +24,9 @@ setup_venv () {
 }
 
 setup_flatbuffers () {
-
-    # download and build the flatbuffer code
-    if [ -d $flatbuffers_dir ]; then
-	echo "flatbuffers already installed."
-    else
-	git clone $flatbuffers_repo
+    if ! [ -d $flatbuffers_dir ]; then
+        git submodule update --init flatbuffers
     fi
-
     cd $flatbuffers_dir
     cmake -G "Unix Makefiles"
     make -j4
@@ -42,8 +35,7 @@ setup_flatbuffers () {
 
     # build schema file
     if ! [ -e $schema ]; then
-	echo "downloading scheme"
-	wget $schema_url -O $schema
+	mv ../$schema $schema
     fi
 
     if ! [ -d tflite ]; then

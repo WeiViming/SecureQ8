@@ -1,3 +1,8 @@
 [submodule "MP-SPDZ"]
 	path = MP-SPDZ
 	url = https://github.com/data61/MP-SPDZ
+	branch = v0.1.8
+[submodule "flatbuffers"]
+	path = flatbuffers
+	url = https://github.com/google/flatbuffers
+	branch = v1.12.1

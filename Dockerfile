@@ -3,15 +3,13 @@ FROM ubuntu:18.04
 RUN apt-get update && apt-get -y install wget tar openssl git make cmake \
     python3 python3-pip python-pip clang libsodium-dev autoconf automake \
     libtool yasm texinfo libboost-dev libssl-dev libboost-system-dev \
-    libboost-thread-dev libgmp-dev rsync ssh openssh-server procps
+    libboost-thread-dev libgmp-dev rsync ssh openssh-server procps vim
 
 WORKDIR /root
 ADD images ./images
 
 ADD build.sh .
 RUN ./build.sh all
-
-RUN git clone https://github.com/data61/MP-SPDZ -b v0.1.8
 
 ADD build-ntl.sh .
 RUN ./build-ntl.sh
