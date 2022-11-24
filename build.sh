@@ -1,6 +1,7 @@
 #!/bin/sh
 
 flatbuffers_dir="flatbuffers"
+flatbuffers_repo="https://github.com/google/flatbuffers"
 schema="schema.fbs"
 virtualenv="venv"
 
@@ -25,23 +26,22 @@ setup_venv () {
 
 setup_flatbuffers () {
     if ! [ -d $flatbuffers_dir ]; then
-        git submodule update --init flatbuffers
+        git clone $flatbuffers_repo -b v1.12.1
     fi
     cd $flatbuffers_dir
     cmake -G "Unix Makefiles"
     make -j4
 
-    cd ..
-
     # build schema file
     if ! [ -e $schema ]; then
-	mv ../$schema $schema
+	mv ../$schema ./$schema
     fi
 
     if ! [ -d tflite ]; then
 	echo "building tflite schema"
-	./$flatbuffers_dir/flatc -p $schema
+	./flatc -p $schema 
     fi
+    cd ..
 }
 
 print_usage () {

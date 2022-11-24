@@ -1,9 +1,10 @@
 #!/bin/bash
 
 name="MP-SPDZ"
+mpspdz_repo="https://github.com/data61/MP-SPDZ"
 
-if ! [ -d $name ]; then
-    git submodule update --init
+if ! [ -e $name/Makefile ]; then
+    git clone $mpspdz_repo -b v0.1.8 
 fi
 
 cd $name
@@ -11,7 +12,6 @@ if [ -e ".gitmodules" ]; then
     rm .gitmodules
     mv ../.gitsub-MP-SPDZ .gitmodules
 fi
-git submodule update --init
 
 echo CXX = clang++ >> CONFIG.mine
 echo USE_NTL = 1 >> CONFIG.mine

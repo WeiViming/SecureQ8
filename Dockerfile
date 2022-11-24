@@ -9,6 +9,9 @@ WORKDIR /root
 ADD images ./images
 
 ADD build.sh .
+ADD schema.fbs .
+ADD .gitsub-MP-SPDZ .
+
 RUN ./build.sh all
 
 ADD build-ntl.sh .
